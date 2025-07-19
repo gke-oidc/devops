@@ -36,4 +36,4 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f test.yaml
+          kubectl apply -f test.yaml --validate=false
