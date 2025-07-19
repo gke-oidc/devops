@@ -28,7 +28,7 @@ jobs:
       - name: Configure kubectl
         run: |
           gcloud container clusters get-credentials gke-jan-demo-cluster \
-            --region us-central1 \
+            --zone us-central1-a \
             --project ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Deploy to GKE
