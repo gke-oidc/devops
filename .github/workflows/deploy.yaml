@@ -34,4 +34,6 @@ jobs:
       - name: Deploy to GKE
         run: |
           gcloud container clusters list
+          kubectl get po
           kubectl apply -f pod.yaml
+          
