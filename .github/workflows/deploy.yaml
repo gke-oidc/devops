@@ -27,6 +27,7 @@ jobs:
 
       - name: Configure kubectl
         run: |
+          gcloud components install gke-gcloud-auth-plugin
           gcloud container clusters get-credentials gke-jan-demo-cluster \
             --zone us-central1-a \
             --project ${{ secrets.GCP_PROJECT_ID }}
