@@ -36,4 +36,6 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f test.yaml
+          kubectl get nodes
+          kubectl get po
+          kubectl apply -f k8s/
