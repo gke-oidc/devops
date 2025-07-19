@@ -24,8 +24,6 @@ jobs:
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-      -  name: Show runner IP
-         run: curl ifconfig.me
 
       - name: Configure kubectl
         run: |
@@ -34,7 +32,13 @@ jobs:
             --zone us-central1-a \
             --project ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Roll
+        run: |
+        
+          kubectl apply -f pod-role.yaml
+      - name: Roll binding
+        run: |
+          kubectl apply -f pod-rolebinding.yam
       - name: Deploy to GKE
         run: |
-          kubectl get po
-          kubectl apply -f k8s/
+          kubectl apply -f pod.yaml
