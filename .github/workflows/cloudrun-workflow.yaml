@@ -31,7 +31,6 @@ jobs:
           gcloud services enable run.googleapis.com
           gcloud auth configure-docker us-docker.pkg.dev
           docker build -t my-app:latest .
-          #gcloud builds submit --tag us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app
           docker build -t my-app:latest us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app/my-app:latest
           docker push us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app/my-app:latest
           
