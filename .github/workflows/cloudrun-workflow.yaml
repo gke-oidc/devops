@@ -1,10 +1,10 @@
 name: Deploy to GKE via OIDC
 
 on:
-workflow_dispatch
-  permissions:
-    id-token: write
-    contents: read
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
@@ -23,14 +23,15 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure kubectl
+      - name: Configure cloud run 
         run: |
-          gcloud components install gke-gcloud-auth-plugin
-          gcloud container clusters get-credentials gke-jan-demo-cluster \
-            --zone us-central1-a \
-            --project ${{ secrets.GCP_PROJECT_ID }}
-      - name: Deploy to GKE
+          gcloud builds submit --tag gcr.io/PROJECT_ID/cloud-run-python-app
+          docker build -t gcr.io/PROJECT_ID/cloud-run-python-app .
+          docker push gcr.io/PROJECT_ID/cloud-run-python-app
+          gcloud services enable run.googleapis.com
+          
+          
+      - name: create-service
         run: |
-          gcloud container clusters list
-          kubectl get po
-          kubectl apply -f pod.yaml
+          gcloud run deploy cloud-run-python-service --image gcr.io/PROJECT_ID/cloud-run-python-app --platform managed --region us-central1 --allow-unauthenticated
+          
