@@ -1,4 +1,4 @@
-name: Deploy to GKE via OIDC
+name: Deploy to Cloudrun via OIDC
 
 on:
   workflow_dispatch:
