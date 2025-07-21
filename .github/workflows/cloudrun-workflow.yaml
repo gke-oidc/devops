@@ -22,15 +22,18 @@ jobs:
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+      -  name: Authenticate Docker with gcloud
+         run: |
+          gcloud auth configure-docker us-docker.pkg.dev
 
       - name: Configure cloud run 
         run: |
           gcloud services enable run.googleapis.com
-          gcloud builds submit --tag us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app
-          docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app .
-          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app
+          gcloud builds submit --tag us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app
+          docker build -t us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app .
+          docker push us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app
           
           
       - name: create-service
         run: |
-          gcloud run deploy cloud-run-python-service --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app --platform managed --region us-central1 --allow-unauthenticated
+          gcloud run deploy cloud-run-python-service --image us-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloud-run-python-app --platform managed --region us-central1 --allow-unauthenticated
