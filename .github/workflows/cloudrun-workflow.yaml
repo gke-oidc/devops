@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  deploy-clour-run:
     runs-on: ubuntu-latest
 
     steps:
